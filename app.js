@@ -62,7 +62,7 @@ app.post("/code", function (req, res) {
             let encodedOutput = buff.toString('base64');
 
             return res.status(201).json({
-                result: encodedOutput,
+                data: encodedOutput,
             });
         });
     });

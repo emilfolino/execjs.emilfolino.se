@@ -33,9 +33,31 @@
 
         <p>Example response:</p>
 
+        <pre class="lager">{
+    "data": "aGVqCg=="
+}</pre>
+
         <p>Code example:</p>
 
+        <pre>
+                    <code class="javascript">var data = {
+    code: btoa('console.log("hej");')
+};
 
+fetch("http://execjs.emilfolino.se/code", {
+    body: JSON.stringify(data),
+    headers: {
+        'content-type': 'application/json'
+    },
+    method: 'POST'
+})
+.then(function (response) {
+    return response.json();
+})
+.then(function(result) {
+    let decodedOutput = atob(result.data);
+    console.log(decodedOutput); // outputs: hej
+});</code></pre>
     </section>
 </main>
 
