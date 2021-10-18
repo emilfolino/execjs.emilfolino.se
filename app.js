@@ -39,13 +39,25 @@ app.post("/code", function (req, res) {
         });
     }
 
+    let matches = decoded.match(/require\(/g);
+    if (matches) {
+        return res.status(500).json({
+            errros: {
+                status: 500,
+                title: "Requires not allowed",
+                message: "",
+                path: "/code",
+            }
+        });
+    }
+
     // create file in docker folder with decoded content
     const data = new Uint8Array(Buffer.from(decoded));
     fs.writeFile('./docker/hello.js', data, (err) => {
         if (err) throw err;
 
         // execute docker run command
-        exec("cd docker && docker build -t hello . > /dev/null 2>&1 && docker run hello", (error, stdout, stderr) => {
+        exec(`cd docker && docker build -t hello . > /dev/null 2>&1 && docker run --memory=1g --cpus=".5" hello`, (error, stdout, stderr) => {
             let output;
 
             if (error) {
