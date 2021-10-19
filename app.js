@@ -57,7 +57,7 @@ app.post("/code", function (req, res) {
         if (err) throw err;
 
         // execute docker run command
-        exec(`cd docker && docker build -t hello . > /dev/null 2>&1 && docker run --cpus="1" hello`, (error, stdout, stderr) => {
+        exec(`cd docker && docker build -t hello . > /dev/null 2>&1 && docker run hello`, (error, stdout, stderr) => {
             let output;
 
             if (error) {
